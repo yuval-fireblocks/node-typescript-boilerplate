@@ -27,6 +27,6 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: |
-        tag="${{ github.event.release.tag_name }}"
-        ./publish.sh "$tag"
+        run: |
+          tag="${{ github.event.release.tag_name }}"
+          ./publish.sh "$tag"
