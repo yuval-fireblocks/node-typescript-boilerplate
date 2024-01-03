@@ -1,34 +1,19 @@
 name: Publish to NPM
-
 on:
   release:
-    types:
-      - published
-      - created
+    types: [published]
 
 jobs:
   publish:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    env:
-      RC_VERSION: ${{ steps.check_rc_version.outputs.rc_version }}
     steps:
-      - name: Check RC version
-        id: check_rc_version
-        run: echo "::set-output name=rc_version::$(echo ${{ github.event.release.tag_name }} | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$' || echo 'false')"
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '14'
-          registry-url: 'https://registry.npmjs.org'
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'  # You can adjust the Node.js version according to your needs
+          node-version: '18'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: npm install
@@ -36,17 +21,12 @@ jobs:
         run: |
           initialTag=${{ github.event.release.tag_name }}
           tag="${initialTag//[v]/}"
-          ./bump-version.sh $tag ${{ env.RC_VERSION }}
+          ./bump-version.sh $tag
       - name: Build library
         run: npm run build
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [ "${{ env.RC_VERSION }}" == "true" ]; then
-            echo "🚀 Publishing RC version..."
-            ./publish.sh --tag "${{ github.event.release.tag_name }}"
-          else
-            echo "🚀 Publishing regular version..."
-            ./publish.sh
-          fi
+      run: |
+        tag="${{ github.event.release.tag_name }}"
+        ./publish.sh "$tag"
