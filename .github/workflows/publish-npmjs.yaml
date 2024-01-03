@@ -11,8 +11,18 @@ jobs:
     name: Publish to NPM
     runs-on: ubuntu-latest
     env:
-      RC_VERSION: ${{ github.event.release.tag_name =~ ^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$ && 'true' || 'false' }}
+      RC_VERSION: ${{ steps.check_rc_version.outputs.rc_version }}
     steps:
+      - name: Check RC version
+        id: check_rc_version
+        run: echo "::set-output name=rc_version::$(echo ${{ github.event.release.tag_name }} | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$' || echo 'false')"
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
