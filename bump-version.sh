@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ ! "$1" ]; then
-  echo "Usage: bump-version.sh <version>       See 'npm version --help' for version conventions"
+  echo "Usage: bump-version.sh <version> [pre-release]       See 'npm version --help' for version conventions"
   exit 1
 fi
 
@@ -14,10 +14,12 @@ PACKAGE_VERSION=$(node -p "require('./package.json').version")
 
 echo "⏫ Bumping to '$1' version ..."
 
-CURRENT_VERSION=$(npm view --registry $NPM_REGISTRY_URL ${PACKAGE_NAME}@latest version > /dev/null || echo "$PACKAGE_VERSION")
-echo "⌗ Current version: $CURRENT_VERSION"
+if [ "$2" ]; then
+  NEW_VERSION=$(npm version --no-git-tag-version --preid="$2" "$1") || exit 1
+else
+  NEW_VERSION=$(npm version --no-git-tag-version "$1") || exit 1
+fi
 
-NEW_VERSION=$(npm version --no-git-tag-version "$1") || exit 1
 echo "⌗ Bumping to: ${NEW_VERSION}"
 
 echo "⌗ Updating CHANGELOG"
