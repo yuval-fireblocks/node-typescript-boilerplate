@@ -10,7 +10,8 @@ if [ ! "$2" ]; then
   exit 1
 fi
 
-echo BRANCH_NAME=$2
+echo V=$1
+echo B=$2
 
 if [ -z "$NPM_REGISTRY_URL" ]; then
   NPM_REGISTRY_URL="https://registry.npmjs.org/"
