@@ -1,6 +1,6 @@
 {
   "name": "node-typescript-boilerplate",
-  "version": "1.1.1-rc",
+  "version": "0.0.17",
   "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
   "type": "module",
   "devDependencies": {

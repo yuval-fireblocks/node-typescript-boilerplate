@@ -5,9 +5,10 @@ if [ ! "$1" ]; then
   exit 1
 fi
 
-if [[ $1 == *"rc"* ]]; then
-  echo "rc, not bumping"
-  exit 0
+TARGET_BRANCH=$2
+if [ ! "$2" ]; then
+  echo "Branch name is missing"
+  exit 1
 fi
 
 if [ -z "$NPM_REGISTRY_URL" ]; then
@@ -28,11 +29,11 @@ echo "⌗ Bumping to: ${NEW_VERSION}"
 echo "⌗ Updating CHANGELOG"
 npm i -g auto-changelog
 auto-changelog --hide-credit -l 100
-echo "export const SDK_VERSION = '$(echo "${NEW_VERSION}" | sed 's/^v//')'" > src/version.ts
+echo "export const SDK_VERSION = \"$(echo "${NEW_VERSION}" | sed 's/^v//')\"" > src/version.ts
 
-echo "📝 Committing to GitHub..."
+echo "📝 Committing to GitHub... Target branch: $TARGET_BRANCH"
 git fetch
-git checkout --track origin/main
+git checkout --track origin/$TARGET_BRANCH
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
