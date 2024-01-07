@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if [ ! "$RELEASE_DIST_TAG" ]; then
+  echo "missing RELEASE_DIST_TAG variable"
+  exit 1
+fi
 
 if [ -z "$NPM_REGISTRY_URL" ]; then
   NPM_REGISTRY_URL="https://registry.npmjs.org/"
@@ -9,8 +13,9 @@ PACKAGE_NAME=$(node -p "require('./package.json').name")
 BOLD='\033[1m'
 NORMAL='\033[00m'
 
-echo -e "🚀 Publishing ${BOLD}$PACKAGE_NAME${NORMAL} to $NPM_REGISTRY_URL\n"
-# npm publish --registry $NPM_REGISTRY_URL || exit 1
-echo "🎉 Published to $NPM_REGISTRY_URL ..."
+# echo -e "🚀 Publishing ${BOLD}$PACKAGE_NAME${NORMAL} to $NPM_REGISTRY_URL\n"
+# npm publish --tag $TAG --registry $NPM_REGISTRY_URL || exit 1
+# echo "🎉 Published to $NPM_REGISTRY_URL ..."
+echo "🎉 dry run. tag: $TAG url: $NPM_REGISTRY_URL"
 
 echo "✅ DONE"

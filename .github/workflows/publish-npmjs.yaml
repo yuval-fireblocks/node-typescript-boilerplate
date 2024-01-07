@@ -13,8 +13,8 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "18"
+          registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: npm install
       - name: Bump Version
@@ -24,7 +24,25 @@ jobs:
           ./bump-version.sh $tag
       - name: Build library
         run: npm run build
+      - name: Set release dist-tag
+        run: |
+          releaseTag=${{ github.event.release.tag_name }}
+          if [ "${{ github.event.release.prerelease }}" == "true" ]; then
+            RELEASE_DIST_TAG="experimental"
+          else
+            RELEASE_DIST_TAG="latest"
+          fi
+          dist_tags=("alpha" "beta" "rc")
+          for distTag in "${dist_tags[@]}"; do
+            if [[ $releaseTag == *$distTag* ]]; then
+              RELEASE_DIST_TAG=$distTag
+              break
+            fi
+          done
+          echo "RELEASE_DIST_TAG=$RELEASE_DIST_TAG" >> $GITHUB_ENV
+          echo "Release dist-tag: $RELEASE_DIST_TAG"
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          RELEASE_DIST_TAG: ${{ env.RELEASE_DIST_TAG }}
         run: ./publish.sh

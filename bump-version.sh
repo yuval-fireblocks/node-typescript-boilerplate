@@ -23,16 +23,19 @@ echo "⌗ Bumping to: ${NEW_VERSION}"
 echo "⌗ Updating CHANGELOG"
 npm i -g auto-changelog
 auto-changelog --hide-credit -l 100
+echo "export const SDK_VERSION = '$(echo "${NEW_VERSION}" | sed 's/^v//')'" > src/version.ts
 
 echo "📝 Committing to GitHub..."
 git fetch
-git checkout --track origin/main
+current_branch=$(git rev-parse --abbrev-ref HEAD)
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
-git add package.json CHANGELOG.md
+git add package.json CHANGELOG.md src/version.ts
 git commit --no-verify -m "📦 Release $NEW_VERSION" || exit 1
 
-git push --no-verify || exit 1
-echo "🎉 Pushed to GitHub ..."
+# git push origin $current_branch --no-verify || exit 1
+# echo "🎉 Pushed to GitHub ..."
+echo "🎉 dry run. branch $current_branch version $NEW_VERSION"
+echo "$github.ref"
 
 echo "✅ DONE"
