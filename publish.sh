@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-echo RELEASE_DIST_TAG=$RELEASE_DIST_TAG
-if [ ! "$RELEASE_DIST_TAG" ]; then
+echo RELEASE_DIST_TAG=$1
+if [ ! "$1" ]; then
   echo "missing RELEASE_DIST_TAG variable"
   exit 1
 fi

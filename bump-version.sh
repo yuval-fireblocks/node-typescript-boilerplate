@@ -5,6 +5,13 @@ if [ ! "$1" ]; then
   exit 1
 fi
 
+if [ ! "$2" ]; then
+  echo "Branch name is missing"
+  exit 1
+fi
+
+echo BRANCH_NAME=$2
+
 if [ -z "$NPM_REGISTRY_URL" ]; then
   NPM_REGISTRY_URL="https://registry.npmjs.org/"
 fi
@@ -27,13 +34,12 @@ echo "export const SDK_VERSION = '$(echo "${NEW_VERSION}" | sed 's/^v//')'" > sr
 
 echo "📝 Committing to GitHub..."
 git fetch
-current_branch=$(git rev-parse --abbrev-ref HEAD)
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
 git commit --no-verify -m "📦 Release $NEW_VERSION" || exit 1
 
-git push origin $current_branch --no-verify || exit 1
+git push origin $2 --no-verify || exit 1
 echo "🎉 Pushed to GitHub ..."
 # echo "🎉 dry run. branch $current_branch version $NEW_VERSION"
 
