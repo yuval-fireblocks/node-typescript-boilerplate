@@ -10,8 +10,8 @@ if [ ! "$2" ]; then
   exit 1
 fi
 
-echo V=$1
-echo B=$2
+echo Ver=$1
+echo Br=$2
 
 if [ -z "$NPM_REGISTRY_URL" ]; then
   NPM_REGISTRY_URL="https://registry.npmjs.org/"

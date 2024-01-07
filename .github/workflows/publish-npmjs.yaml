@@ -19,6 +19,8 @@ jobs:
         run: npm install
       - name: Bump Version
         run: |
+          echo "r.e ${{ toJson(github.event.release) }}"
+          echo "g.c $GITHUB_CONTEXT"
           initialTag=${{ github.event.release.tag_name }}
           tag="${initialTag//[v]/}"
           BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)
