@@ -16,7 +16,6 @@ NORMAL='\033[00m'
 
 echo -e "🚀 Publishing ${BOLD}$PACKAGE_NAME${NORMAL} to $NPM_REGISTRY_URL\n"
 # npm publish --tag $TAG --registry $NPM_REGISTRY_URL || exit 1
-echo "🎉 Published to $NPM_REGISTRY_URL... with tag: $RELEASE_DIST_TAG"
-echo "dry..."
+echo "🎉 DRY!!! to $NPM_REGISTRY_URL with tag: $RELEASE_DIST_TAG ..."
 
 echo "✅ DONE"
