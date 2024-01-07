@@ -40,6 +40,5 @@ git commit --no-verify -m "📦 Release $NEW_VERSION" || exit 1
 
 git push --no-verify || exit 1
 echo "🎉 Pushed to GitHub ..."
-# echo "🎉 dry run. branch $current_branch version $NEW_VERSION"
 
 echo "✅ DONE"

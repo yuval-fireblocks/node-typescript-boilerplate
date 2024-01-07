@@ -14,9 +14,8 @@ PACKAGE_NAME=$(node -p "require('./package.json').name")
 BOLD='\033[1m'
 NORMAL='\033[00m'
 
-# echo -e "🚀 Publishing ${BOLD}$PACKAGE_NAME${NORMAL} to $NPM_REGISTRY_URL\n"
-# npm publish --tag $TAG --registry $NPM_REGISTRY_URL || exit 1
-# echo "🎉 Published to $NPM_REGISTRY_URL ..."
-echo "🎉 dry run. tag: $1 url: $NPM_REGISTRY_URL"
+echo -e "🚀 Publishing ${BOLD}$PACKAGE_NAME${NORMAL} to $NPM_REGISTRY_URL\n"
+npm publish --tag $TAG --registry $NPM_REGISTRY_URL || exit 1
+echo "🎉 Published to $NPM_REGISTRY_URL ..."
 
 echo "✅ DONE"

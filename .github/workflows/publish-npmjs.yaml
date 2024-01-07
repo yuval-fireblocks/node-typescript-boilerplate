@@ -45,5 +45,4 @@ jobs:
       - name: Publish to NPM
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          RELEASE_DIST_TAG: ${{ env.RELEASE_DIST_TAG }}
-        run: ./publish.sh $RELEASE_DIST_TAG
+        run: ./publish.sh ${{ env.RELEASE_DIST_TAG }}
