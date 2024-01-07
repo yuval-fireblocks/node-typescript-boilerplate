@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+#### [v0.0.18](https://github.com/yuval-fireblocks/node-typescript-boilerplate/compare/v0.0.17...v0.0.18)
+
+> 7 January 2024
+
+- g [`51797a9`](https://github.com/yuval-fireblocks/node-typescript-boilerplate/commit/51797a9219daaa84cb0bd0c33de9394a43a24ab3)
+- test [`1d25931`](https://github.com/yuval-fireblocks/node-typescript-boilerplate/commit/1d259316d423e6d362d5f6b5e4bfcfa7b3bde74a)
+- 📦 Release v0.0.17 [`3af1565`](https://github.com/yuval-fireblocks/node-typescript-boilerplate/commit/3af156568239ee0dc6fc5eac3bb017bb5ef33bbc)
+
 #### [v0.0.17](https://github.com/yuval-fireblocks/node-typescript-boilerplate/compare/v0.0.16-rc.1...v0.0.17)
 
 > 7 January 2024
