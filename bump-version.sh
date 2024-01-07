@@ -32,13 +32,13 @@ echo "export const SDK_VERSION = \"$(echo "${NEW_VERSION}" | sed 's/^v//')\"" > 
 
 echo "📝 Committing to GitHub... Target branch: $2"
 git fetch
-git checkout origin/$2
+git checkout --track origin/$2
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
 git commit --no-verify -m "📦 Release $NEW_VERSION" || exit 1
 
-git push origin $2 --no-verify || exit 1
+git push --no-verify || exit 1
 echo "🎉 Pushed to GitHub ..."
 # echo "🎉 dry run. branch $current_branch version $NEW_VERSION"
 
