@@ -30,16 +30,15 @@ npm i -g auto-changelog
 auto-changelog --hide-credit -l 100
 echo "export const SDK_VERSION = \"$(echo "${NEW_VERSION}" | sed 's/^v//')\"" > src/version.ts
 
-TARGET_BRANCH=origin/$2
-echo "📝 Committing to GitHub... Target branch: $CURRENT_VERSION"
+echo "📝 Committing to GitHub... Target branch: $2"
 git fetch
-git checkout $TARGET_BRANCH
+git checkout $2
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
 git commit --no-verify -m "📦 Release $NEW_VERSION" || exit 1
 
-git push $TARGET_BRANCH --no-verify || exit 1
+git push origin $2 --no-verify || exit 1
 echo "🎉 Pushed to GitHub ..."
 # echo "🎉 dry run. branch $current_branch version $NEW_VERSION"
 
