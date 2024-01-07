@@ -32,7 +32,7 @@ echo "export const SDK_VERSION = \"$(echo "${NEW_VERSION}" | sed 's/^v//')\"" > 
 
 echo "📝 Committing to GitHub... Target branch: $2"
 git fetch
-git checkout $2
+git checkout origin/$2
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
