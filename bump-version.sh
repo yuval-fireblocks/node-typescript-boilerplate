@@ -5,6 +5,7 @@ if [ ! "$1" ]; then
   exit 1
 fi
 
+TARGET_BRANCH=$2
 if [ ! "$2" ]; then
   echo "Branch name is missing"
   exit 1
@@ -30,9 +31,9 @@ npm i -g auto-changelog
 auto-changelog --hide-credit -l 100
 echo "export const SDK_VERSION = \"$(echo "${NEW_VERSION}" | sed 's/^v//')\"" > src/version.ts
 
-echo "📝 Committing to GitHub... Target branch: $2"
+echo "📝 Committing to GitHub... Target branch: $TARGET_BRANCH"
 git fetch
-git checkout --track origin/$2
+git checkout --track origin/$TARGET_BRANCH
 git config --global user.email "github-actions@github.com"
 git config --global user.name "Github Actions"
 git add package.json CHANGELOG.md src/version.ts
